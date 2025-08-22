@@ -1,22 +1,32 @@
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../authProvider/AuthProvider";
+import { FaShoppingCart } from "react-icons/fa";
+import useCart from "../customHook/useCart";
 
 
 const Navbar = () => {
   const {user,logOut}=useContext(AuthContext)
+  const[cart]=useCart()
     const navOptions=<>
-     <li><NavLink to="/">Home</NavLink></li>
+    <nav className="md:flex md:items-center ">
+       <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/contactUs">Contact Us</NavLink></li>
            <li><NavLink to="/dashboard">DashBoard</NavLink></li>
               <li><NavLink to="/ourMenu">Our Menu</NavLink></li>
-                 <li><NavLink to="/order">Order Food</NavLink></li>
+                 <li><NavLink to="/order/salad">Order Food</NavLink></li>
                  
                   <li><NavLink to="/secret">Secret</NavLink></li>
-                 
+                  <li><NavLink to="/dashboard/cart">
+                  <button className="btn">
+                   <FaShoppingCart />
+                   <div className="badge badge-secondary">+{cart.length}</div>
+                 </button>
+                  </NavLink></li>
                  {!user && <>
                   <li><NavLink to="/login">Login</NavLink></li>
                  </>}
+    </nav>
                  
     </>
     const handleLogout=()=>{
